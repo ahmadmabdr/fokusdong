@@ -7,8 +7,8 @@ Next.js (App Router) + TypeScript + Tailwind CSS v4 project.
 - `app/(frontend)/` — user-facing pages, route group (no URL segment). Each route gets its own `page.tsx` and, when it needs page-specific chrome/metadata, its own `layout.tsx` scoped to that route only.
 - `app/(backend)/api/` — API route handlers, kept separate from frontend routes via route group.
 - `app/layout.tsx` — the **only** place that renders `<html>`/`<body>` and loads fonts/`globals.css`. Nested layouts must never repeat these — they should just wrap `children` (plus any route-scoped styling/metadata).
-- `components/ui/` — small, presentational primitives (e.g. a single button/badge). No business logic, no data fetching. Take plain props (`label`, `selected`, `onClick`, …) and stay reusable across features.
-- `components/features/` — composed components that orchestrate one or more `ui/` primitives plus feature-specific logic (e.g. generating a list from a count, wiring selection state). Page files should stay thin and mostly assemble `features/` components.
+- `components/ui/` — small, presentational primitives (e.g. a single button/badge). No business logic, no data fetching. Take plain props (`label`, `selected`, `onClick`, …) and stay reusable across features. **Every JSX element with a `className` — `<div>`, `<button>`, `<p>`, layout wrappers, everything — is declared here, not inline in a feature.**
+- `components/features/` — composition and flow only: mapping data to `ui/` components, wiring state/handlers, deciding what renders when. A `features/` file must not contain a bare styled element (no `<div className=...>`, no `<button className=...>`); every visual piece is a `ui/` component it imports and arranges. If a feature needs a new visual shape (a button variant, a layout wrapper, a grid), add it to `components/ui/` first, then use it — don't inline it "just this once." Page files should stay thin and mostly assemble `features/` components.
 - Import via the `@/*` path alias (maps to project root), not relative `../../` chains.
 
 ## Component conventions
