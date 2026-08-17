@@ -1,4 +1,5 @@
 import { QuizCard } from "@/components/ui/quiz-card";
+import { Stack } from "@/components/ui/stack";
 import type { QuizSummary } from "@/lib/types/quiz";
 
 interface QuizListProps {
@@ -7,7 +8,7 @@ interface QuizListProps {
 
 export function QuizList({ quizzes }: QuizListProps) {
   return (
-    <div className="flex flex-col gap-2">
+    <Stack>
       {quizzes.map((quiz) => (
         <QuizCard
           key={quiz.id}
@@ -16,6 +17,6 @@ export function QuizList({ quizzes }: QuizListProps) {
           description={quiz.description}
         />
       ))}
-    </div>
+    </Stack>
   );
 }

@@ -1,5 +1,6 @@
 "use client";
 
+import { QuestionGrid } from "@/components/ui/question-grid";
 import { QuestionSelection } from "@/components/ui/question-selection";
 
 interface QuestionSelectionGridProps {
@@ -14,7 +15,7 @@ export function QuestionSelectionGrid({
   onSelectQuestion,
 }: QuestionSelectionGridProps) {
   return (
-    <div className="grid grid-cols-10 gap-2">
+    <QuestionGrid>
       {Array.from({ length: totalQuestions }, (_, index) => index + 1).map((questionNumber) => (
         <QuestionSelection
           key={questionNumber}
@@ -23,6 +24,6 @@ export function QuestionSelectionGrid({
           onClick={() => onSelectQuestion?.(questionNumber)}
         />
       ))}
-    </div>
+    </QuestionGrid>
   );
 }

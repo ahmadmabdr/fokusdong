@@ -28,8 +28,26 @@ function QuizContent() {
     setSelectedOption(undefined);
   }
 
+  function handleSubmitAnswer() {
+    if (!quiz || activeQuestionNumber === null) return;
+
+    const nextQuestionNumber = activeQuestionNumber + 1;
+    if (nextQuestionNumber <= quiz.totalQuestions) {
+      handleSelectQuestion(nextQuestionNumber);
+    }
+  }
+
+  function handlePreviousQuestion() {
+    if (!quiz || activeQuestionNumber === null) return;
+
+    const previousQuestionNumber = activeQuestionNumber - 1;
+    if (previousQuestionNumber >= 1) {
+      handleSelectQuestion(previousQuestionNumber);
+    }
+  }
+
   return (
-    <div className="flex flex-row flex-1 items-start justify-center gap-4 bg-zinc-50 p-4 font-sans dark:bg-black">
+    <div className="flex flex-row flex-1 items-start justify-center gap-4 bg-zinc-50 p-4 font-sans dark:bg-black px-20">
       <div className="flex flex-col flex-1 gap-4 rounded-lg border border-zinc-200 bg-white p-4 shadow-sm dark:border-zinc-800 dark:bg-zinc-900">
         {!quizId && <p className="text-sm text-zinc-500">No quiz selected.</p>}
         {quizError && <p className="text-sm text-red-600 dark:text-red-400">{quizError}</p>}
@@ -59,7 +77,11 @@ function QuizContent() {
             question={question.question}
             options={question.options}
             selectedOption={selectedOption}
+            isFirstQuestion={activeQuestionNumber === 1}
+            isLastQuestion={activeQuestionNumber === quiz?.totalQuestions}
             onSelectOption={setSelectedOption}
+            onPrevious={handlePreviousQuestion}
+            onSubmit={handleSubmitAnswer}
           />
         )}
       </div>
