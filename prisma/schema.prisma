@@ -24,3 +24,29 @@ model UsersData {
   @@index([email])
   @@map("users_data")
 }
+
+model Quiz {
+  id          String     @id
+  title       String
+  description String
+  createdAt   DateTime   @default(now()) @map("created_at")
+  updatedAt   DateTime   @default(now()) @map("updated_at")
+  questions   Question[]
+
+  @@map("quizzes")
+}
+
+model Question {
+  id            String   @id
+  quizId        String   @map("quiz_id")
+  question      String
+  options       String[]
+  correctAnswer Int      @map("correct_answer")
+  createdAt     DateTime @default(now()) @map("created_at")
+  updatedAt     DateTime @default(now()) @map("updated_at")
+
+  quiz Quiz @relation(fields: [quizId], references: [id], onDelete: Cascade)
+
+  @@index([quizId])
+  @@map("questions")
+}
